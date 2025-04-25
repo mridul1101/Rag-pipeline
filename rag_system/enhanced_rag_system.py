@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import RetrievalQA
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.schema import Document
+import numpy as np
 from config.config import EMBEDDING_MODEL, INDEX_PATH, MODEL_NAME, logger
 from document_processing.document_processor import DocumentProcessor
 from retrieval.retriever import DateFilteredRetriever
@@ -94,6 +95,7 @@ class EnhancedRAGSystem:
             logger.error(f"Error evaluating relevance: {str(e)}")
             return 0.0
 
+    
     def _execute_rag_query(self, query_text: str, conversation_history: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
         """Execute the RAG query and return the results."""
         if not hasattr(self, 'rag_chain'):
@@ -218,3 +220,4 @@ class EnhancedRAGSystem:
                 logger.info(f"Added {len(web_docs)} web search results to vector store")
         except Exception as e:
             logger.error(f"Error adding web results to vector store: {str(e)}")
+
